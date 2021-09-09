@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+    dayz:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 2302:2302/udp
+            - 27016:27016/udp
+        environment:
+            # Threads/vCores available on the server
+            CPU_COUNT: 6
+        volumes:
+            - ../linux-dayz-profile-data:/data
+            - ../linux-dayz-server-files:/server
+            - ./serverDZ.cfg:/config.cfg:ro
+        command: ./DayZServer -cpuCount=${CPU_COUNT} -dologs -adminlog -netlog -freezecheck -profiles=/data -config=/config.cfg
+        mem_limit: 8g
