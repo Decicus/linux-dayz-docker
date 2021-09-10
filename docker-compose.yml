@@ -5,15 +5,16 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        restart: unless-stopped
         ports:
             - 2302:2302/udp
             - 27016:27016/udp
-        environment:
-            # Threads/vCores available on the server
-            CPU_COUNT: 6
         volumes:
-            - ../linux-dayz-profile-data:/data
-            - ../linux-dayz-server-files:/server
+            # Directory used for "profiles"
+            - ./profile_data:/data
+            # Directory used for server/mission files etc.
+            - ./server_files:/server
+            # Server config. This is mounted as "read-only" in the container.
             - ./serverDZ.cfg:/config.cfg:ro
-        command: ./DayZServer -cpuCount=${CPU_COUNT} -dologs -adminlog -netlog -freezecheck -profiles=/data -config=/config.cfg
+        command: ./DayZServer -cpuCount=6 -dologs -adminlog -netlog -freezecheck -profiles=/data -config=/config.cfg
         mem_limit: 8g

@@ -69,6 +69,7 @@ DATA_VOLUME="${SERVER_FILES}";
 STEAMCMD_PARAMS="+app_update ${STEAM_APP_ID} validate";
 
 # Modify the command if a workshop ID is specified.
+# Note: I am not entirely sure if this is the correct method.
 if [[ ! -z "${WORKSHOP_ID}" ]]; then
     echo "Name of mod (Steam workshop item):";
     read WORKSHOP_MOD_NAME;
@@ -79,7 +80,7 @@ fi
 
 docker run -it \
     -v "${DATA_VOLUME}":/data \
-    -v "${BASE_DIR}/.steamcmd":/root/Steam \
+    -v "${BASE_DIR}/.steamcmd":/root/.steam \
     steamcmd/steamcmd:latest +login "${STEAM_USERNAME}" +force_install_dir /data \
     $STEAMCMD_PARAMS \
     +quit;
@@ -89,5 +90,8 @@ if [[ ! -z "${WORKSHOP_ID}" && ! -z "${WORKSHOP_MOD_NAME}" ]]; then
     MOD_NAME_FOLDER="${SERVER_FILES}/${WORKSHOP_MOD_NAME}";
     mkdir -p "${MOD_NAME_FOLDER}";
     cp -r "${ORIG_MOD_FOLDER}"/* "${MOD_NAME_FOLDER}";
+    cp -r "${ORIG_MOD_FOLDER}/Keys"/* "${SERVER_FILES}/keys";
+
+    echo;
     echo "Workshop/mod files copied to: ${MOD_NAME_FOLDER}";
 fi
