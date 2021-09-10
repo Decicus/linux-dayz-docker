@@ -7,6 +7,8 @@ usage: $0 [FileName]
 Uploads files to Gofile
 OPTIONS:
     -w        Steam workshop ID. If specified, it downloads a Steam workshop item instead of updating server files.
+              Workshop content requires logging in with a Steam account that owns DayZ.
+
     -h        Show this message
 EOF
 }
@@ -50,9 +52,6 @@ if [[ ! -d "${WORKSHOP_FILES}" ]]; then
     mkdir -p "${WORKSHOP_FILES}";
 fi
 
-echo "Steam username: ";
-read STEAM_USERNAME;
-
 # Check if already specified via environment variable
 # Note: I have no idea what happens if you switch between exp/stable without clearing the
 #       existing server files. Might be some conflicts?
@@ -67,10 +66,14 @@ fi
 
 DATA_VOLUME="${SERVER_FILES}";
 STEAMCMD_PARAMS="+app_update ${STEAM_APP_ID} validate";
+STEAM_USERNAME="anonymous";
 
 # Modify the command if a workshop ID is specified.
 # Note: I am not entirely sure if this is the correct method.
 if [[ ! -z "${WORKSHOP_ID}" ]]; then
+    echo "Steam username: ";
+    read STEAM_USERNAME;
+
     echo "Name of mod (Steam workshop item):";
     read WORKSHOP_MOD_NAME;
 
