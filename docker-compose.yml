@@ -16,5 +16,12 @@ services:
             - ./server_files:/server
             # Server config. This is mounted as "read-only" in the container.
             - ./serverDZ.cfg:/config.cfg:ro
-        command: ./DayZServer -cpuCount=6 -dologs -adminlog -netlog -freezecheck -profiles=/data -config=/config.cfg
+        environment:
+            CONFIG_FILE: /config.cfg
+            PROFILE_DIR: /data
+            CPU_COUNT: 6
+
+            # Stable: 223350
+            # Experimental: 1042420
+            STEAM_APP_ID: 1042420
         mem_limit: 8g
