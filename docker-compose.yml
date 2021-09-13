@@ -16,6 +16,9 @@ services:
             - ./server_files:/server
             # Server config. This is mounted as "read-only" in the container.
             - ./serverDZ.cfg:/config.cfg:ro
+
+            # Persist SteamCMD updates, so it doesn't need to re-download the update every time...
+            - ./.steamcmd:/root/.steam
         environment:
             CONFIG_FILE: /config.cfg
             PROFILE_DIR: /data
