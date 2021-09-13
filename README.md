@@ -15,6 +15,12 @@ For [1.14 experimental, Linux support for servers was finally released](https://
 - **Workshop content only**: A Steam account with DayZ
     - It seems Steam does not allow downloading workshop content "anonymously", nor can you download workshop content for games you do not own on Steam.
 
+## Useful resources
+
+1. [DayZ Server Files Documentation on DayZ Forums](https://forums.dayz.com/topic/239635-dayz-server-files-documentation/)
+2. [DayZ Server Configuration on Bohemia's wiki](https://community.bistudio.com/wiki/DayZ:Server_Configuration)
+    - Some duplicate information that's also included in #1.
+
 ## Things that need to be done manually at the moment
 - Mount the `whitelist.txt` / `priority.txt` files in the Docker Compose file
 - Remote access via RCON isn't enabled by default. You can configure that [by following the steps on Bohemia's wiki](https://community.bistudio.com/wiki/DayZ:Server_Configuration#BattlEye_Configuration)
