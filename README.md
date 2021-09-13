@@ -10,6 +10,7 @@ For [1.14 experimental, Linux support for servers was finally released](https://
     - From my experience: 3 threads/cores + 5 GB RAM available for the DayZ server is the absolute minimum.
 - A Linux OS with `bash` installed, as I have no idea if my `download.sh` script is POSIX-compatible.
     - I use Debian 11 (Bullseye) as I'm writing, but other major OSes such as Ubuntu/CentOS will likely work just fine.
+- Familiarity with the Linux commandline is a "must", as this isn't really intended for "Linux newbies".
 - Server also needs Docker & [Docker Compose](https://docs.docker.com/compose/) installed
 - **Workshop content only**: A Steam account with DayZ
     - It seems Steam does not allow downloading workshop content "anonymously", nor can you download workshop content for games you do not own on Steam.
@@ -22,19 +23,22 @@ For [1.14 experimental, Linux support for servers was finally released](https://
 
 ## Known issues
 - Crashes. Server will often crash and "hang". I haven't been able to look into _why_, nor how to detect it. You'll just have to watch logs and manually restart accordingly (`docker-compose down && docker-compose up -d`).
+    - There doesn't seem to be a good way to really detect it, as the server seems to still respond to "queries" and acting responsive, even if it has crashed.
 
 ## Setup
 
-1. Run `./download.sh`, which will start downloading _and validating_ the DayZ server files.
-    - Unless script has been modified to, it will download into the directory: `server_files`
-    - At the time of writing, only DayZ experimental server is supported.
-2. Copy `serverDZ.example.cfg` to a new file called `serverDZ.cfg`. Edit the configuration options as you see fit.
+1. Copy `serverDZ.example.cfg` to a new file called `serverDZ.cfg`. Edit the configuration options as you see fit.
     - **Optional**: Copy extra configuration options from the `serverDZ_extra.example.cfg` file into the `serverDZ.cfg` file you created.
-3. Run `docker-compose up -d` to start up the server
+2. Edit the file `docker-compose.yml` to match your server specs/needs.
+    - Make sure all the paths (volumes), environment variables (for extra configuring) and memory limit matches what you want to limit your system to.
+    - `CPU_COUNT` is practically "thread count" from what I understand. Easiest way to get that number is running `nproc`.
+3. Run `docker-compose up -d` to start up the server. It will download the server files into `server_files` (unless changed in `docker-compose.yml`).
 4. **Optional**: Run `docker-compose logs -ft` to watch the console/server logs. Hit CTRL+C to get out of the logs.
 
 Once you're done with the server, run `docker-compose down` to shut the server/container down.  
 If you wanna boot it back up, just run `docker-compose up -d` again.
+
+Server updates will run using [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD) every time the server is started back up, so it might take a few extra seconds.
 
 ## Workshop content
 For workshop content, run `./download.sh -w WORKSHOP_ID_HERE`, which will prompt you for your Steam username _and_ a "Workshop mod name".  

@@ -24,4 +24,5 @@ services:
             # Stable: 223350
             # Experimental: 1042420
             STEAM_APP_ID: 1042420
+        # Memory limit for the container
         mem_limit: 8g
