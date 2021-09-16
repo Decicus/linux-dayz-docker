@@ -1,9 +1,11 @@
 # linux-dayz-docker
-
 For [1.14 experimental, Linux support for servers was finally released](https://forums.dayz.com/topic/251335-experimental-update-114-changelog/?page=4&tab=comments#comment-2472603). This is my half-assed attempt at creating a Docker container for running a (barebones) DayZ server.
 
-## Requirements
+Please keep in mind that this **hasn't** been tested with more than maybe 3 players and shouldn't be considered stable at all.  
+Crashes will occur, especially in experimental. Modding support probably isn't as stable as the Windows version etc.  
+This has all been written/tested by an amateur when it comes to DayZ server hosting, so not everything maybe be accurate.
 
+## Requirements
 - System/server specifications matching the [minimum requirements](https://forums.dayz.com/topic/239635-dayz-server-files-documentation/?tab=comments#comment-2396573)
     - During my testing I was running a VM with 6 dedicated threads and 32 GB RAM, on Debian 11 (though OS doesn't matter much).
     - By default the `docker-compose.yml` file limits the memory usage to 8 GB (`mem_limit`). Feel free to tweak as you see fit for your system.
@@ -16,7 +18,6 @@ For [1.14 experimental, Linux support for servers was finally released](https://
     - It seems Steam does not allow downloading workshop content "anonymously", nor can you download workshop content for games you do not own on Steam.
 
 ## Useful resources
-
 1. [DayZ Server Files Documentation on DayZ Forums](https://forums.dayz.com/topic/239635-dayz-server-files-documentation/)
 2. [DayZ Server Configuration on Bohemia's wiki](https://community.bistudio.com/wiki/DayZ:Server_Configuration)
     - Some duplicate information that's also included in #1.
@@ -32,7 +33,6 @@ For [1.14 experimental, Linux support for servers was finally released](https://
     - There doesn't seem to be a good way to really detect it, as the server seems to still respond to "queries" and acting responsive, even if it has crashed.
 
 ## Setup
-
 1. Copy `serverDZ.example.cfg` to a new file called `serverDZ.cfg`. Edit the configuration options as you see fit.
     - **Optional**: Copy extra configuration options from the `serverDZ_extra.example.cfg` file into the `serverDZ.cfg` file you created.
 2. Edit the file `docker-compose.yml` to match your server specs/needs.
@@ -46,6 +46,14 @@ If you wanna boot it back up, just run `docker-compose up -d` again.
 
 Server updates will run using [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD) every time the server is started back up, so it might take a few extra seconds.
 
+### Modifications to startup script
+If you have modified the startup script (`run_server.sh`), you'll have to rebuild the container for script changes to apply.
+
+Assuming you already have a running server while modifying the script:
+1. `docker-compose down` to stop the server
+2. `docker-compose build` to rebuild the container
+3. `docker-compose up -d` to start the server back up again.
+
 ## Workshop content
 For workshop content, run `./download.sh -w WORKSHOP_ID_HERE`, which will prompt you for your Steam username _and_ a "Workshop mod name".  
 Specifically for DayZ workshop content you need a Steam account that owns DayZ.
@@ -54,6 +62,9 @@ Specifically for DayZ workshop content you need a Steam account that owns DayZ.
 - All workshop content will be downloaded to the `workshop_mods` folder.
 
 I am not entirely sure if this is the _correct_ method. I have literally zero experience with DayZ servers, so you might have to look into proper methods yourself.
+
+### Mod support
+For mod support you will have to investigate yourself. You'll have to modify the launch options in `run_server.sh`, then rebuild the container using `docker-compose build` before (re)starting the server.
 
 ## Thanks to
 
