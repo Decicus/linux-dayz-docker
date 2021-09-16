@@ -9,7 +9,7 @@ This has all been written/tested by an amateur when it comes to DayZ server host
 - System/server specifications matching the [minimum requirements](https://forums.dayz.com/topic/239635-dayz-server-files-documentation/?tab=comments#comment-2396573)
     - During my testing I was running a VM with 6 dedicated threads and 32 GB RAM, on Debian 11 (though OS doesn't matter much).
     - By default the `docker-compose.yml` file limits the memory usage to 8 GB (`mem_limit`). Feel free to tweak as you see fit for your system.
-    - From my experience: 3 threads/cores + 5 GB RAM available for the DayZ server is the absolute minimum.
+    - From my testing with the mentioned specs and monitoring the server's resource usage: 3 threads/cores + 5 GB RAM available for the DayZ server is the absolute minimum.
 - A Linux OS with `bash` installed, as I have no idea if my `download.sh` script is POSIX-compatible.
     - I use Debian 11 (Bullseye) as I'm writing, but other major OSes such as Ubuntu/CentOS will likely work just fine.
 - Familiarity with the Linux commandline is a "must", as this isn't really intended for "Linux newbies".
