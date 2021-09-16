@@ -3,7 +3,7 @@ For [1.14 experimental, Linux support for servers was finally released](https://
 
 Please keep in mind that this **hasn't** been tested with more than maybe 3 players and shouldn't be considered stable at all.  
 Crashes will occur, especially in experimental. Modding support probably isn't as stable as the Windows version etc.  
-This has all been written/tested by an amateur when it comes to DayZ server hosting, so not everything maybe be accurate.
+This has all been written/tested by an amateur when it comes to DayZ server hosting, so it's likely some information is inaccurate.
 
 ## Requirements
 - System/server specifications matching the [minimum requirements](https://forums.dayz.com/topic/239635-dayz-server-files-documentation/?tab=comments#comment-2396573)
