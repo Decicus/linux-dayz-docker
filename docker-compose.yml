@@ -4,28 +4,27 @@ services:
     dayz:
         build:
             context: .
-            dockerfile: Dockerfile
         restart: unless-stopped
         ports:
             - 2302:2302/udp
             - 27016:27016/udp
         volumes:
             # Directory used for "profiles"
-            - ./profile_data:/data
+            - ./profile_data:/mnt/user/server/dayz/profiles
             # Directory used for server/mission files etc.
-            - ./server_files:/server
+            - ./server_files:/mnt/user/server/dayz/
             # Server config. This is mounted as "read-only" in the container.
-            - ./serverDZ.cfg:/config.cfg:ro
+            - ./serverDZ.cfg:/mnt/user/server/dayz/serverDZ.cfg:ro
 
             # Persist SteamCMD updates, so it doesn't need to re-download the update every time...
             - ./.steamcmd:/root/.steam
         environment:
             CONFIG_FILE: /config.cfg
             PROFILE_DIR: /data
-            CPU_COUNT: 6
+            CPU_COUNT: 4
 
             # Stable: 223350
             # Experimental: 1042420
-            STEAM_APP_ID: 1042420
+            STEAM_APP_ID: 223350
         # Memory limit for the container
-        mem_limit: 8g
+        mem_limit: 6g
